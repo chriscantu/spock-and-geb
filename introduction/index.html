@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Spock Test Framework</title>
+    
+    <meta name="description" content="Spock Framework">
+    <meta name="author" content="Chris Cantu">
+    <meta name="viewport" content="width=1024">
+    
+    <!-- Core and extension CSS files -->
+    <link rel="stylesheet" href="../core/deck.core.css">
+    <link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" href="../extensions/status/deck.status.css">
+    <link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+    
+    <!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" id="style-theme-link" href="../themes/style/neon.css">
+    <link rel="stylesheet" id="transition-theme-link" href="../themes/transition/fade.css">
+    
+    <!-- Custom CSS just for this page -->
+    <link rel="stylesheet" href="introduction.css">
+    <link href="../themes/style/shThemeDefault.css" rel="stylesheet" type="text/css" />
+    <script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<div class="slide" id="spock-testing">
+    <h1>Testing with Spock</h1>
+</div>
+
+<div class="slide" id="why-spock">
+    <h2>So Why Spock?</h2>
+    <ol>
+        <li class="slide" id="why-spock-designed">
+            <h3>Designed for Developers</h3>
+            <p>Developer friendly BDD test framework</p>
+        </li>
+        <li class="slide" id="why-spock-easy">
+            <h3>Easy to Learn</h3>
+            <p>Know Java? Know JUnit? Good to Go.</p>
+        </li>
+        <li class="slide" id="why-spock-detailed">
+            <h3>Detailed Reports</h3>
+            <p>Standard JUnit reports with more meat!</p>
+        </li>
+        <li class="slide" id="why-spock-flexible">
+            <h3>Muy Flexible</h3>
+            <p>Unit, Integration, Functional, Behavior....oh la la!!</p>
+        </li>
+        <li class="slide" id="why-spock-self-documenting">
+            <h3>Self Documenting</h3>
+            <p>Well-written specifications are a valuable source of information.</p>
+        </li>
+    </ol>
+</div>
+
+<div class="slide" id="basics">
+    <h2>Spock Basics</h2>
+    <ol>
+        <li class="slide" id="basics-specifications">
+            <h3>Specifications</h3>
+            <p>Defines program behaviors</p>
+        </li>
+        <li class="slide" id="basics-feature-methods">
+            <h3>Feature Methods</h3>
+            <p>Heart of a specification.  It describes properties and aspects.</p>
+    <pre class="brush: groovy">def "validate account balance method"(){ 
+    //block goes here
+}   </pre>
+        </li>
+        <li class="slide" id="basics-blocks">
+            <h3>Blocks</h3>
+            <p> Blocks divide a method into distinct sections and cannot be nested. (more on blocks later)</p>
+        </li>
+        <li class="slide" id="basics-helper-blocks">
+            <h3>Helper Methods</h3>
+            <p>Special methods which help manage complexity.  Good candidates are setup & cleanup blocks</p>
+        </li>
+    </ol>
+</div>
+<div class="slide" id="blocks">
+    <h2>Feeling Blocky</h2>
+    <ol>
+        <li class="slide" id="blocks-setup">
+            <h3>Setup Blocks</h3>
+            <pre class="brush: groovy">setup:
+    def acct = new Account()</pre>
+        </li>
+        <li class="slide" id="blocks-when-then">
+            <h3>When / Then Blocks</h3>
+            <pre class="brush: groovy">when:
+    def result = Math.max(4,2) //stimulus
+then:
+    result == 4 //reponse</pre>
+        </li>
+        <li class="slide" id="more-cleanup">
+            <h3>Cleanup Blocks</h3>
+            <pre class="brush: groovy">setup:
+    def acct = new Account()
+    acct.save()
+    
+    //Other blocks
+
+cleanup:
+    acct.delete()</pre>
+        </li>
+    </ol>
+</div>
+
+<div class="slide" id="more-blocks">
+    <h2>Even More Blocks!</h2>
+    <ol>
+        <li class="slide" id="more-where">
+            <h3>Where Blocks</h3>
+            <pre class="brush: groovy">def "Validate max value"() {
+    expect:
+        Math.max( a, b ) == c
+
+    where:
+        a << [ 4, 4 ]
+        b << [ 2, 9 ]
+        c << [ 4, 9 ]
+}</pre>
+        </li>
+        <li class="slide" id="more-where-grid">
+            <h3>Where Blocks - Datagrid</h3>
+            <pre class="brush: groovy">def "Validate max value"() {
+    expect:
+        Max.max( a, b ) == c
+    where:
+        a | b | c
+        4 | 2 | 4
+        4 | 9 | 9
+}</pre>
+        </li>
+    </ol>
+</div>
+
+<div id="exception" class="slide">
+    <h2>Exception Handling</h2>
+    <ol>
+        <li class="slide" id="exception-thrown">
+            <h3>Exception Thrown</h3>
+            <pre class="brush: groovy">when:
+    2 / 0
+then:
+    def e = thrown(ArithmeticException)
+    e.message == "Division by zero"
+            </pre>
+        </li>
+        <li class="slide" id="exception-not-thrown">
+            <h3>Exception Not Thrown</h3>
+            <pre class="brush: groovy">when:
+    2 / 2
+then:
+    notThrown(ArithmeticException)</pre>
+        </li>
+    </ol>
+</div>
+<div id="helper" class="slide">
+    <h2>Helper Methods</h2>
+    <ol>
+        <li class="slide" id="blocks-helper">
+            <pre class="brush: groovy">def "Create an account"() {
+    when:
+        def acct = Account.create("Chris", "Cantu")
+    then:
+        validateAccount(acct)
+}
+
+def validateAccount(acct) {
+    acct.firstName == "Chris" && acct.lastName == "Cantu" 
+    && acct.balance == 0
+}</pre>
+        </li>
+    </ol>
+</div>
+<div class="slide" id="themes">
+    <h2>Style Themes</h2>
+    <p>Customizes the colors, typography, and layout of slide&nbsp;content.</p>
+    <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/css/style-theme.css&quot;&gt;</code></pre>
+    <h2>Transition Themes</h2>
+    <p>Defines transitions between slides using CSS3 transitions.  Less capable browsers fall back to cutaways. But <strong>you</strong> aren&rsquo;t using <em>those</em> browsers to give your presentations, are&nbsp;you&hellip;</p>
+    <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/css/transition-theme.css&quot;&gt;</code></pre>
+</div>
+
+<div class="slide" id="extensions">
+    <h2>Extensions</h2>
+    <p>Core gives you basic slide functionality with left and right arrow navigation, but you may want&nbsp;more. This deck includes all of them, so feel free to play around.</p>
+    
+    <ul>
+        <li class="slide" id="extensions-goto">
+            <strong>deck.goto</strong>: Adds a shortcut key to jump to any slide number.  Hit g, type in the slide number, and hit&nbsp;enter.
+        </li>
+        
+        <li class="slide" id="extensions-hash">
+            <strong>deck.hash</strong>: Enables internal linking within slides, deep linking to individual slides, and updates the address bar &amp; a permalink anchor with each slide&nbsp;change.
+        </li>
+
+        <li class="slide" id="extensions-menu">
+            <strong>deck.menu</strong>: Adds a menu view, letting you see all slides in a grid. Hit m to toggle to menu view, continue navigating your deck, and hit m to return to normal&nbsp;view.
+        </li>
+
+        <li class="slide" id="extensions-navigation">
+            <strong>deck.navigation</strong>: Adds clickable left and right buttons for the less keyboard inclined.
+        </li>
+
+        <li class="slide" id="extensions-status">
+            <strong>deck.status</strong>: Adds a page number indicator. (current/total)
+        </li>
+    </ul>
+    
+    <p class="slide" id="extension-folders">Each extension folder in the download package contains the necessary JavaScript, CSS, and HTML&nbsp;files.</p>
+</div>
+
+<div class="slide" id="nested">
+    <h2>Nested Slides</h2>
+    <p>That last slide had a few steps.  To create substeps in slides, just nest them:</p>
+    <pre><code>&lt;div class=&quot;slide&quot;&gt;
+  &lt;h2&gt;Extensions&lt;/h2&gt;
+  &lt;p&gt;Core gives you basic slide functionality...&lt;/p&gt;        
+  &lt;ul&gt;
+     &lt;li class=&quot;slide&quot;&gt;
+        &lt;h3&gt;deck.goto&lt;/h3&gt;
+        &lt;p&gt;Adds a shortcut key to jump to any slide number...&lt;/p&gt;
+     &lt;/li&gt;
+     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;   
+     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;
+     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<div class="slide" id="elements-images">
+    <h2>Other Elements: Images</h2>
+    <img src="375.jpg" alt="Kitties">
+    <pre><code>&lt;img src=&quot;http://placekitten.com/600/375&quot; alt=&quot;Kitties&quot;&gt;</code></pre>
+</div>
+
+<div class="slide" id="elements-blockquotes">
+    <h2>Other Elements: Blockquotes</h2>
+    <blockquote cite="http://example.org">
+        <p>Food is an important part of a balanced diet.</p>
+        <p><cite>Fran Lebowitz</cite></p>
+    </blockquote>
+    <pre><code>&lt;blockquote cite=&quot;http://example.org&quot;&gt;
+  &lt;p&gt;Food is an important part of a balanced diet.&lt;/p&gt;
+  &lt;p&gt;&lt;cite&gt;Fran Lebowitz&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</code></pre>
+</div>
+
+
+<div class="slide" id="digging-deeper">
+    <h2>Digging Deeper</h2>
+    <p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
+</div>
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p class="deck-status">
+    <span class="deck-status-current"></span>
+    /
+    <span class="deck-status-total"></span>
+</p>
+
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js">\x3C/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+<script src="shCore.js"></script>
+<script src="shBrushGroovy.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['toolbar'] = false;
+    SyntaxHighlighter.all();
+</script>
+<!-- Specific to this page -->
+<script src="introduction.js"></script>
+
+</body>
+</html>
