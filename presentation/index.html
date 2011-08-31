@@ -169,6 +169,29 @@ then:
         </li>
     </ol>
 </div>
+
+<div id="mocking" class="slide">
+	<h2>Mocking</h2>
+	<ol>
+		<li class="slide" id="mocking-expectation">
+			<h3>Mocking with Expectations</h3>
+			<pre class="brush: groovy">setup:
+	Account acct = Mock()
+	acct.create("Chris", "Cantu") >> helperCreateAcct()</pre>
+		</li>
+		<li class="slide" id="mocking-dont-care">
+			<h3>Mocking with no expectations</h3>
+			<pre class="brush: groovy">setup:
+	Account acct = Mock()
+	acct.create(_,_) >> helperCreateAcct()</pre>
+		</li>
+		<li class="slide" id="mocking-caveat">
+			<h3>No support for static methods</h3>
+			<pre class="brush: groovy">setup:
+	Account.metaClass.static.create = { first, last -> helperCreateAcct() }</pre>
+		</li>
+	</ol>
+</div>
 <div id="helper" class="slide">
     <h2>Helper Methods</h2>
     <ol>
@@ -295,6 +318,11 @@ class AdminPage extends Page {
 	<h2>Still Not Impressed?</h2>
 	<img src="ferrisSpock.png" class="slide" id="geb-spock-ferris"/>
 	<h1 class="slide" id="demo-no-pleasing">Then there is no pleasing you!</h1>
+</div>
+
+<div id="where-to-get-it" class="slide">
+    <h2>Where to get the presentation?</h2>
+    <h3>https://github.com/christophercantu/spock-and-geb</h3>
 </div>
 
 <script src="jquery.js"></script>
