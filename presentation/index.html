@@ -193,9 +193,111 @@ def validateAccount(acct) {
 	<img src="hotSpock.jpg" class="slide" id="demo-hot"/>
 	<h1 class="slide" id="demo-time">Demo Time!</h1>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
-<script>window.jQuery || document.write('<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js">\x3C/script>')</script>
 
+<div id="Bonus-Geb" class="slide">
+	<h1>Bonus! - Geb Functional Testing</h1>
+</div>
+
+<div id="why-geb" class="slide">
+	<h2>So, Why Geb?</h2>
+	<ol>
+		<li class="slide" id="why-geb-cross-browser">
+			<h3>Cross Browser Support</h3>
+			<p>Firefox, Chrome, IE, Opera, and HTMLUnit</p>
+		</li>
+		<li class="slide" id="why-geb-jquery-selectors">
+			<h3>Navigator API</h3>
+			<p>API based on JQuery / CSS based selectors</p>
+		</li>
+		<li class="slide" id="why-geb-async">
+			<h3>Asynchronous Support</h3>
+			<p>Async / AJAX pages support built in</p>
+		</li>
+		<li class="slide" id="why-geb-integration">
+			<h3>Integration</h3>
+			<p>Supports test frameworks JUnit, EasyB, Cucumber, and...Spock!</p>
+		</li>
+		<li class="slide" id="why-geb-page-objects">
+			<h3>Page Objects</h3>
+			<p>Web pages represented in code for reuse</p>
+		</li>
+	</ol>
+</div>
+
+<div id="geb-jquery" class="slide">
+	<h2>JQuery / CSS Selectors</h2>
+	<ol>
+		<li class="slide" id="geb-jquery-css3">
+			<h2>CSS 3 Selectors</h2>
+			<pre class="brush: groovy">$("div.list-class table")</pre>
+		</li>
+		<li class="slide" id="geb-jquery-index">
+			<h2>Index / Attribute matching</h2>
+			<pre class="brush: groovy">$("p", name: "description")
+$("h1", 2, class: "heading")</pre>
+		</li>
+		<li class="slide" id="geb-jquery-chaining">
+			<h2>JQuery Chaining</h2>
+			<pre class="brush: groovy">$("div").find(".b")</pre>
+		</li>
+		<li class="slide" id="geb-jquery-forms">
+			<h2>Form Controls</h2>
+			<pre class="brush: groovy">$("form").name = "Geb"
+assert $("form").name == "Geb"</pre>
+		</li>
+	</ol>
+</div>
+
+<div id="geb-async" class="slide">
+	<h2>Asynchronicity</h2>
+	<ol>
+		<li class="slide" id="geb-async-wait">
+			<h3>All content lookups support wait for</h3>
+			<pre class="brush: groovy">//waits for p.status to equal phrase
+waitFor { 
+	$("p.status").text() == "Asynchronous operation complete!"
+}</pre>
+		</li>
+		<li class="slide" id="geb-async-any">
+			<h3>Wait for any content</h3>
+			<pre class="brush: groovy">def dynamicParagraph = waitFor { $("p.dynamically-added") }
+dynamicParagraph.text() == "Added dynamically!"</pre>
+		</li>
+	</ol>
+</div>
+<div id="geb-page-objects" class="slide">
+	<h2>Page Objects Example</h2>
+	<pre class="brush: groovy">import geb.Page
+
+class LoginPage extends Page {
+	static url = "http://myapp.com/login"
+	static at = { heading.text() == "Please Login" }
+	static content = {
+		heading { $("h1") }
+		loginForm { $("form.login") }
+		loginButton(to: AdminPage) { loginForm.login() }
+	}
+}
+
+class AdminPage extends Page {
+	static at = { heading.text() == "Admin Section" }
+	static content = {
+		heading { $("h1") }
+	}
+}</pre>
+</div>
+
+<div id="geb-spock-demo" class="slide">
+	<h1>Geb / Spock Integration Demo</h1>
+</div>
+
+<div id="geb-spock-not-impressed" class="slide">
+	<h2>Still Not Impressed?</h2>
+	<img src="ferrisSpock.png" class="slide" id="geb-spock-ferris"/>
+	<h1 class="slide" id="demo-no-pleasing">Then there is no pleasing you!</h1>
+</div>
+
+<script src="jquery.js"></script>
 <!-- Deck Core and extensions -->
 <script src="../core/deck.core.js"></script>
 <script src="../extensions/status/deck.status.js"></script>
