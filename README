@@ -1,5 +1,6 @@
 To view this presentation, you need to do the following:
 
-1. cd into 'presentation' directory
-2. double click 'index.html'
-3. Stick a fork in ya, cuz you are done!
+1. git clone git@github.com:christophercantu/spock-and-geb.git
+2. cd into 'spock-and-geb/presentation' directory
+3. double click 'index.html'
+4. Stick a fork in ya, cuz you are done!
